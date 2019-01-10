@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
 import { Link } from './index.styles';
 
-interface ButtonProps {
+interface ButtonProps extends React.HTMLAttributes<HTMLAnchorElement> {
   link: string;
   text: string;
   background?: string;
   size?: string;
-  target?: string;
 }
 
 export default class Button extends Component<ButtonProps> {
   render() {
-    const { link, background, size, text, target } = this.props;
+    const { link, background, size, text, ...otherProps } = this.props;
 
     // check if link is external or not
     if (link.includes('https')) {
@@ -21,7 +20,7 @@ export default class Button extends Component<ButtonProps> {
           href={link}
           background={background}
           size={size}
-          target={target === '_blank' ? '_blank' : '_self'}
+          {...otherProps}
         >
           {text}
         </Link>
@@ -34,6 +33,7 @@ export default class Button extends Component<ButtonProps> {
         href={link}
         background={background}
         size={size}
+        {...otherProps}
       >
         {text}
       </Link>
